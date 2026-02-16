@@ -27,6 +27,8 @@ namespace backend.Models
 
         public int? RecurrenceValue { get; set; }
 
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
         [ForeignKey("UserId")]
         public User? User { get; set; }
 

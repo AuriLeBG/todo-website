@@ -13,6 +13,7 @@ import { useTheme } from './ThemeContext';
 import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import StatsDashboard from './StatsDashboard';
 
 const API_URL = 'http://localhost:5000/api/Todo';
 
@@ -403,6 +404,13 @@ const Todo = () => {
                                 History View
                                 {view === 'history' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-600 dark:bg-purple-400"></div>}
                             </button>
+                            <button
+                                className={`px-4 py-2 font-medium text-sm transition-colors relative ${view === 'insights' ? 'text-purple-600 dark:text-purple-400' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
+                                onClick={() => setView('insights')}
+                            >
+                                Insights
+                                {view === 'insights' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-600 dark:bg-purple-400"></div>}
+                            </button>
                         </div>
 
                         {/* Filter Bar */}
@@ -431,6 +439,8 @@ const Todo = () => {
                         <div className="space-y-4">
                             {view === 'calendar' ? (
                                 <TodoCalendar todos={todos} onUpdateTodo={handleUpdateTodo} />
+                            ) : view === 'insights' ? (
+                                <StatsDashboard userId={user.id} />
                             ) : (
                                 <DndContext
                                     sensors={sensors}

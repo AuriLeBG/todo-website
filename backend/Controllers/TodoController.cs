@@ -208,6 +208,46 @@ namespace backend.Controllers
             return NoContent();
         }
 
+        [HttpGet("stats/{userId}")]
+        public async Task<ActionResult<object>> GetStats(int userId)
+        {
+            var todos = await _context.TodoItems
+                .Where(t => t.UserId == userId)
+                .ToListAsync();
+
+            var totalCompleted = todos.Count(t => t.IsCompleted);
+            var totalCount = todos.Count;
+            var completionRate = totalCount > 0 ? (double)totalCompleted / totalCount * 100 : 0;
+
+            // Category Distribution
+            var categoryDistribution = todos
+                .Where(t => t.IsCompleted && !string.IsNullOrEmpty(t.Category))
+                .GroupBy(t => t.Category)
+                .Select(g => new { Category = g.Key, Count = g.Count() })
+                .ToList();
+
+            // Completion Trend (Last 7 days)
+            var last7Days = Enumerable.Range(0, 7)
+                .Select(i => DateTime.UtcNow.Date.AddDays(-i))
+                .OrderBy(d => d)
+                .ToList();
+
+            var completionTrend = last7Days.Select(date => new
+            {
+                Date = date.ToString("yyyy-MM-dd"),
+                Count = todos.Count(t => t.IsCompleted && t.CreatedAt.Date == date)
+            }).ToList();
+            
+            return new
+            {
+                totalCompleted,
+                totalCount,
+                completionRate,
+                categoryDistribution,
+                completionTrend
+            };
+        }
+
         private bool TodoItemExists(int id)
         {
             return _context.TodoItems.Any(e => e.Id == id);
