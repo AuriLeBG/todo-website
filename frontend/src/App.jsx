@@ -3,6 +3,7 @@ import Login from './Login';
 import Register from './Register';
 import Todo from './Todo';
 import { AuthProvider, useAuth } from './AuthContext';
+import NotificationManager from './NotificationManager';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -24,6 +25,7 @@ function Home() {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+        <NotificationManager />
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800">Welcome, {user.username}!</h1>
           <button onClick={logout} className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">Logout</button>

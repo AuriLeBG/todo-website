@@ -5,6 +5,10 @@ import App from './App.jsx'
 
 import { ThemeProvider } from './ThemeContext.jsx'
 
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW({ immediate: true })
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProvider>

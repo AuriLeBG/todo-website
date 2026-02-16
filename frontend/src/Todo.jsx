@@ -12,10 +12,8 @@ import ProgressPlant from './ProgressPlant';
 import { useTheme } from './ThemeContext';
 import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from './api';
 import StatsDashboard from './StatsDashboard';
-
-const API_URL = 'http://localhost:5000/api/Todo';
 
 const Todo = () => {
     const navigate = useNavigate();
@@ -56,7 +54,7 @@ const Todo = () => {
 
     const fetchTodos = async () => {
         try {
-            const response = await axios.get(`${API_URL}/${user.id}`);
+            const response = await api.get(`/Todo/${user.id}`);
             setTodos(response.data);
         } catch (error) {
             console.error("Error fetching todos:", error);
@@ -79,7 +77,7 @@ const Todo = () => {
         };
 
         try {
-            const response = await axios.post(API_URL, todoData);
+            const response = await api.post('/Todo', todoData);
             setTodos([...todos, response.data]);
             setNewTodo('');
             setPriority('0');
@@ -102,7 +100,7 @@ const Todo = () => {
         setTodos(todos.map(t => t.id === id ? updatedTodo : t));
 
         try {
-            await axios.put(`${API_URL}/${id}`, updatedTodo);
+            await api.put(`/Todo/${id}`, updatedTodo);
             if (updatedTodo.isCompleted && updatedTodo.recurrence !== 0) {
                 fetchTodos();
             }
@@ -117,7 +115,7 @@ const Todo = () => {
         setTodos(todos.filter(t => t.id !== id));
 
         try {
-            await axios.delete(`${API_URL}/${id}`);
+            await api.delete(`/Todo/${id}`);
         } catch (error) {
             console.error("Error deleting todo:", error);
             setTodos(previousTodos);
@@ -133,7 +131,7 @@ const Todo = () => {
                 const newItems = arrayMove(items, oldIndex, newIndex);
 
                 const reorderedIds = newItems.map(t => t.id);
-                axios.post(`${API_URL}/reorder`, reorderedIds).catch(err => console.error("Reorder failed", err));
+                api.post('/Todo/reorder', reorderedIds).catch(err => console.error("Reorder failed", err));
 
                 return newItems;
             });
@@ -153,7 +151,7 @@ const Todo = () => {
         setTodos(todos.map(t => t.id === todoId ? updatedTodo : t));
 
         try {
-            const response = await axios.post(`${API_URL}/${todoId}/subtasks`, { title, isCompleted: false });
+            const response = await api.post(`/Todo/${todoId}/subtasks`, { title, isCompleted: false });
             setTodos(currentTodos => currentTodos.map(t => {
                 if (t.id === todoId) {
                     return { ...t, subTasks: t.subTasks.map(st => st.id === tempId ? response.data : st) };
@@ -182,7 +180,7 @@ const Todo = () => {
         setTodos(todos.map(t => t.id === todoId ? updatedTodo : t));
 
         try {
-            await axios.put(`${API_URL}/subtasks/${subTaskId}`, updatedSubTask);
+            await api.put(`/Todo/subtasks/${subTaskId}`, updatedSubTask);
         } catch (error) {
             console.error("Error updating subtask:", error);
             fetchTodos();
@@ -201,7 +199,7 @@ const Todo = () => {
         setTodos(todos.map(t => t.id === todoId ? updatedTodo : t));
 
         try {
-            await axios.delete(`${API_URL}/subtasks/${subTaskId}`);
+            await api.delete(`/Todo/subtasks/${subTaskId}`);
         } catch (error) {
             console.error("Error deleting subtask:", error);
             fetchTodos();
@@ -234,7 +232,7 @@ const Todo = () => {
         setEditId(null);
 
         try {
-            await axios.put(`${API_URL}/${id}`, updatedTodo);
+            await api.put(`/Todo/${id}`, updatedTodo);
         } catch (error) {
             console.error("Error updating todo:", error);
             fetchTodos();

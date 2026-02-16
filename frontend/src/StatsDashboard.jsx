@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from './api';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, Legend
 } from 'recharts';
 
-const API_BASE = 'http://localhost:5000/api/Todo';
 const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#0088FE', '#00C49F'];
 
 const StatsDashboard = ({ userId }) => {
@@ -15,7 +14,7 @@ const StatsDashboard = ({ userId }) => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const response = await axios.get(`${API_BASE}/stats/${userId}`);
+                const response = await api.get(`/Todo/stats/${userId}`);
                 setStats(response.data);
             } catch (error) {
                 console.error('Error fetching stats:', error);
