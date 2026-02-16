@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode for Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Force DatePicker to start above everything */
+.react-datepicker-popper {
+    z-index: 9999 !important;
+}

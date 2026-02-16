@@ -1,0 +1,68 @@
+# Common ignore patterns for Antigravity Full-Stack Project
+
+# --- Node.js / Frontend ---
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.next/
+
+# --- .NET / Backend ---
+# Build results
+[Bb]in/
+[Oo]bj/
+backend/bin/
+backend/obj/
+backend.Tests/bin/
+backend.Tests/obj/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files (DotSettings)
+*.DotSettings.user
+
+# Project-specific files
+[Tt]est[Rr]esult*/
+
+# Environment files
+backend/appsettings.Development.json
+# backend/appsettings.json (Usually kept but with placeholders)
+
+# --- IDEs / Editors ---
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains (Rider, etc.)
+.idea/
+
+# Visual Studio
+.vs/
+
+# --- Docker ---
+.docker/
+# (docker-compose files are usually tracked)
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+
+# --- Antigravity Specific ---
+# (Add any specific temporary or log files here)
+*.log
