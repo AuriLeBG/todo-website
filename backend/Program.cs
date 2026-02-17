@@ -75,6 +75,8 @@ app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
+app.MapGet("/api/health", () => Results.Ok("Up"));
+
 app.MapControllers();
 
 app.Run();

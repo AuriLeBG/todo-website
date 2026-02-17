@@ -17,7 +17,10 @@ function Register() {
             });
             navigate('/login');
         } catch (err) {
-            setError('Registration failed. Username might be taken.');
+            const errorMessage = err.response?.data?.errors
+                ? Object.values(err.response.data.errors).flat().join(' ')
+                : (typeof err.response?.data === 'string' ? err.response.data : 'Registration failed.');
+            setError(errorMessage);
             console.error(err);
         }
     };

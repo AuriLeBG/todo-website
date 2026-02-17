@@ -1,7 +1,10 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
+import api from './api';
 import Login from './Login';
 import Register from './Register';
 import Todo from './Todo';
+import UserManagement from './UserManagement';
 import { AuthProvider, useAuth } from './AuthContext';
 import NotificationManager from './NotificationManager';
 
@@ -36,6 +39,9 @@ function Home() {
             <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded">
               <h2 className="text-xl font-bold text-yellow-800">Admin Panel</h2>
               <p className="text-gray-700">You have access to administrative features.</p>
+              <div className="mt-4">
+                <Link to="/admin/users" className="inline-block px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition">Manage Users</Link>
+              </div>
             </div>
           )}
         </div>
@@ -52,6 +58,13 @@ function Home() {
 }
 
 function App() {
+  useEffect(() => {
+    // Keep-alive ping every 12 minutes
+    const ping = () => api.get('/health').catch(() => { });
+    const interval = setInterval(ping, 12 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -61,6 +74,11 @@ function App() {
           <Route path="/todos" element={
             <ProtectedRoute>
               <Todo />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/users" element={
+            <ProtectedRoute>
+              <UserManagement />
             </ProtectedRoute>
           } />
           <Route path="/" element={
