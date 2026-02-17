@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from './AuthContext';
-import api from './api';
+import { useAuth } from '../auth/AuthContext';
+import api from '../../services/api';
 
 function UserManagement() {
     const [users, setUsers] = useState([]);

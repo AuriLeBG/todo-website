@@ -7,12 +7,12 @@ import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSo
 import SortableTodoItem from './SortableTodoItem';
 import TodoCalendar from './TodoCalendar';
 import FocusMode from './FocusMode';
-import ThemeToggle from './ThemeToggle';
+import ThemeToggle from '../../components/common/ThemeToggle';
 import ProgressPlant from './ProgressPlant';
-import { useTheme } from './ThemeContext';
-import { useAuth } from './AuthContext';
+import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import api from './api';
+import api from '../../services/api';
 import StatsDashboard from './StatsDashboard';
 
 const Todo = () => {
