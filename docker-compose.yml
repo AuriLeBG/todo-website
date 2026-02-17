@@ -6,8 +6,10 @@ services:
     ports:
       - "5000:8080"
     environment:
-      - ConnectionStrings__DefaultConnection=Host=db;Database=AntigravityDb;Username=postgres;Password=your_password
+      - ConnectionStrings__DefaultConnection=Host=db;Database=AntigravityDb;Username=postgres;Password=${DB_PASSWORD}
       - ASPNETCORE_ENVIRONMENT=Development
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - USER_PASSWORD=${USER_PASSWORD}
     depends_on:
       - db
     networks:
@@ -28,7 +30,7 @@ services:
     image: postgres:15-alpine
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: your_password
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: AntigravityDb
     ports:
       - "5432:5432"

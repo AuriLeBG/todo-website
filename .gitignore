@@ -37,6 +37,7 @@ backend.Tests/obj/
 [Tt]est[Rr]esult*/
 
 # Environment files
+.env
 backend/appsettings.Development.json
 # backend/appsettings.json (Usually kept but with placeholders)
 

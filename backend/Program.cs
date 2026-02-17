@@ -39,16 +39,19 @@ using (var scope = app.Services.CreateScope())
 
         if (!context.Users.Any())
         {
+            var adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD") ?? "admin";
+            var userPassword = Environment.GetEnvironmentVariable("USER_PASSWORD") ?? "user";
+
             context.Users.Add(new User 
             { 
                 Username = "admin", 
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin"), 
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(adminPassword), 
                 Role = "Admin" 
             });
             context.Users.Add(new User 
             { 
                 Username = "user", 
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("user"), 
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(userPassword), 
                 Role = "User" 
             });
             context.SaveChanges();
